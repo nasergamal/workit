@@ -1,0 +1,9 @@
+
+#react
+npm_module
+
+
+#django
+Pipfile
+.env
+db.sqlite3
