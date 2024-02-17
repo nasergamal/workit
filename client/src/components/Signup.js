@@ -19,13 +19,12 @@ function Signup() {
         body: JSON.stringify({username, email, password1, password2})
     });
     console.log(res.status)
-    if (res.status === 204) {
+    if (res.status === 204 || res.status === 201) {
        toast(`Confirmation Email has been sent to ${email}. please verify you account to contiue`)
        console.log('no Problem') 
     }  else {
         const data = await res.json();
         setErrors(data);
-        console.log(errors?.password2);
     }
         
     }
