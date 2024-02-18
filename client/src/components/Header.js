@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { LogoutUser } from '../redux/actionCreator';
+import { LogoutUser, unsetProfile, setProfile } from '../redux/actionCreator';
 import { url } from '../utils/backend';
 
 const Header = () => {
-    const {isAuthenticated} = useSelector((state) => state.auth)
+    const {isAuthenticated, token} = useSelector((state) => state.auth)
+    const {ready, userName, profile} = useSelector((state) => state.user)
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
@@ -14,16 +15,49 @@ const Header = () => {
     setIsOpen(!isOpen);
     };
 
+
+    const prepareProfile = async () => {
+            const response = await fetch(`${url}/api/user/me/`, {
+        method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Token ' + token,
+            },
+        })
+        if (response.status === 200) {
+            let userData = await response.json();
+            const payload = {
+                userName: userData.username,
+                email: userData.email,
+                profile: userData.profile,
+                education: userData.education ? userData.education : {},
+                experience: userData.experience? userData.experience : {},
+            }
+            dispatch(setProfile(payload)) 
+        } else {
+          console.log(response);
+            }
+    }
+
+    useEffect(() => {
+        console.log('here')
+        if (isAuthenticated && !ready) {
+            prepareProfile();
+        } else if (!isAuthenticated && ready) {
+            dispatch(unsetProfile())
+        }
+    }, [isAuthenticated])
+
     const logoutHandler = async () => {
         await fetch(`${url}/auth/logout/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                //'Authorization':'Bearer ' + token,
             },
         })
       localStorage.removeItem('authTokens')
       dispatch(LogoutUser());
+      dispatch(unsetProfile());
       navigate('/')
   }
       
@@ -63,7 +97,7 @@ const Header = () => {
 
       {isOpen && (
         <div
-          className="absolute z-10 right-0 mt-2 w-56 origin-top-right rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+          className=" text-center absolute z-10 right-0 mt-2 w-56 origin-top-right rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
           role="menu"
           aria-labelledby="menu-button"
           tabIndex="-1"
@@ -75,6 +109,14 @@ const Header = () => {
             tabIndex="-1"
             id="menu-item-0"
           >
+            <div className="flex justify-center">
+            <img
+                src={url + '/' +profile.profile_pic}
+                alt="Profile Picture"
+                className="w-12 h-12 rounded-full object-cover"
+            />
+            </div>
+            {userName}<br/>
             View Profile
           </Link>
           <p

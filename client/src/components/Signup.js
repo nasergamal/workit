@@ -8,6 +8,8 @@ function Signup() {
   const [password1, setPassword1] = useState('');
   const [password2, setPassword2] = useState('');
   const [errors, setErrors] = useState(null)//{username: '', email: '', password1: '', password2: ''});
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
 
   const handleSubmit = async(e) => {
     e.preventDefault();
@@ -16,7 +18,7 @@ function Signup() {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({username, email, password1, password2})
+        body: JSON.stringify({username, email, password1, password2, first_name: firstName, last_name: lastName})
     });
     console.log(res.status)
     if (res.status === 204 || res.status === 201) {
@@ -27,7 +29,7 @@ function Signup() {
         setErrors(data);
     }
         
-    }
+  }
         
     return (
     <div className="container mx-auto max-w-md mt-10">
@@ -111,6 +113,38 @@ function Signup() {
             ${password2 && password2 !== password1 ? 'border-red-500': ''}`}
           />
           {password2 && password2 !== password1 && <ul><li className='text-red-500'>Passwords doesn't match</li></ul> }
+        </div>
+
+        <div>
+          <label htmlFor="firstname" className="block text-sm font-medium text-gray-700">
+            First Name
+          </label>
+          <input
+            type="text"
+            id="firstname"
+            name="firstname"
+            autoComplete="firstname"
+            required
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-md sm:text-sm border border-gray-300 p-2.5'
+          />
+        </div>
+        
+        <div>
+          <label htmlFor="lastname" className="block text-sm font-medium text-gray-700">
+            Last Name
+          </label>
+          <input
+            type="text"
+            id="lastname"
+            name="lastname"
+            autoComplete="lastname"
+            required
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-md sm:text-sm border border-gray-300 p-2.5'
+          />
         </div>
         <button
           type="submit"

@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT, SIGNUP } from "./actions";
+import { LOGIN, LOGOUT } from "./actions";
 
 const token = localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null;
 const auth = token ? true: false

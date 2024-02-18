@@ -6,8 +6,8 @@ from .models import UserProfile
 
 @receiver(post_save, sender=User)
 def profile_creation(sender, instance=None, created=False, **kwargs):
-    print('maybe here')
+    print(kwargs)
     if created:
-        UserProfile.objects.create(user=instance,)
+        UserProfile.objects.create(user=instance, first_name=instance.first_name, last_name=instance.last_name,)
 
 

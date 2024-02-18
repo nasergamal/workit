@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import { jwtDecode } from 'jwt-decode';
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
-import { LoginUser } from "../redux/actionCreator";
+import { LoginUser, setProfile } from "../redux/actionCreator";
 import { url } from '../utils/backend'
+
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const handleLogin = async (e) => {
         e.preventDefault()
         
