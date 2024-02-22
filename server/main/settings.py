@@ -180,3 +180,5 @@ REST_FRAMEWORK = {
 REST_AUTH = {
    "REGISTER_SERIALIZER":"main.serializers.CustomRegisterSerializer"
 }
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 10485760

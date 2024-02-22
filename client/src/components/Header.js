@@ -40,7 +40,6 @@ const Header = () => {
     }
 
     useEffect(() => {
-        console.log('here')
         if (isAuthenticated && !ready) {
             prepareProfile();
         } else if (!isAuthenticated && ready) {

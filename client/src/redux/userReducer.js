@@ -5,8 +5,8 @@ const initialState = {
     userName: '',
     email: '',
     profile: {},
-    education: {},
-    experience: {},
+    education: [],
+    experience: [],
 }
 
 function userReducer(state=initialState, action) {

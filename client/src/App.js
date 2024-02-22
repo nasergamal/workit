@@ -8,6 +8,9 @@ import Verify from './components/Verify';
 import Profile from './components/Profile';
 import PrivateRoute from './utils/PrivateRoute';
 import Experience from './components/profileComponents/Experience';
+import Education from './components/profileComponents/Education';
+import UserProfile from './components/profileComponents/UserProfile';
+
 function App() {
 
   return (
@@ -21,6 +24,8 @@ function App() {
                 <Route path='/verify/:id' element={<Verify/>}/>
                 <Route path='/profile' element={<PrivateRoute><Profile/> </PrivateRoute>}/>
                 <Route path='/experience' element={<PrivateRoute><Experience/> </PrivateRoute>}/>
+                <Route path='/education' element={<PrivateRoute><Education/> </PrivateRoute>}/>
+                <Route path='/userProfile' element={<PrivateRoute><UserProfile/> </PrivateRoute>}/>
             </Routes>
         </Router>
     </div>

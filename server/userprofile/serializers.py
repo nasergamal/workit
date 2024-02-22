@@ -18,7 +18,7 @@ class ExperienceSerializer(serializers.ModelSerializer):
 class EducationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Education 
-        fields = ['pk', 'school', 'degree', 'study_field', 'activites', 'description']
+        fields = ['pk', 'institution', 'degree', 'study_field', 'activites', 'description', 'start', 'end']
 
 class UserSerializer(serializers.ModelSerializer):
     profile = UserProfileSerializer(many=False)
