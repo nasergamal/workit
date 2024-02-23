@@ -1,16 +1,14 @@
-from allauth.account.utils import user_email
-from django.http.response import ResponseHeaders
+from django.contrib.auth.models import User
+from django.db.models import Q, Value as V
+from django.db.models.functions import Concat
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes, parser_classes
 from rest_framework.parsers import JSONParser, MultiPartParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-import json
 
-from rest_framework.schemas.coreapi import serializers
 from userprofile.serializers import UserProfileSerializer, ExperienceSerializer , EducationSerializer, UserSerializer
 from userprofile.models import UserProfile, Experience, Education
-from userprofile.forms import UserProfileForm
 
 def get_user(user):
     try:
@@ -25,7 +23,18 @@ def profile(request):
     user = request.user
     userdata = UserSerializer(get_user(user), many=False)
     return Response(userdata.data)
- 
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def retrieve_user(request, username):
+    try:
+        user = User.objects.get(username=username)
+        userdata = UserSerializer(get_user(user), many=False)
+        return Response(userdata.data)
+    except:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
 
 @api_view(['POST', 'PUT', 'DELETE'])
 @permission_classes([IsAuthenticated])
@@ -58,7 +67,7 @@ def set_experience(request):
 def set_education(request):
     if request.method == 'POST':
         data = JSONParser().parse(request)
-        print(data)
+        # print(data)
         serializer = EducationSerializer(data=data)
         if serializer.is_valid(raise_exception=True):
             serializer.save(user=request.user)
@@ -90,8 +99,20 @@ def set_profile(request):
         serializer = UserProfileSerializer(userprofile, data=request.data, partial=True)
         if serializer.is_valid(raise_exception=True):
             serializer.save(user=request.user)
-            print(serializer.data)
+            # print(serializer.data)
             return Response(serializer.data)
         else:
             pass#return Response(serializer.errors)
     return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def search_profile(request):
+    query = request.GET.get('q')
+    user_list = UserProfile.objects.annotate(
+            full_name=Concat('first_name', V(' '), 'last_name')).filter(
+                    Q(full_name__icontains= query) | Q(position__icontains = query))
+    userdata = UserProfileSerializer(user_list, many=True)
+    # print(userdata.data)
+    return Response(userdata.data)
+

@@ -1,66 +1,88 @@
 import moment from 'moment';
 import { useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import Profile from './Profile';
 import { url } from '../utils/backend';
-import UserProfile from './profileComponents/UserProfile';
-import Experience from './profileComponents/Experience';
-import Education from './profileComponents/Education';
 import Loading from '../utils/Loading';
-import AddButton from '../utils/AddButton';
-import EditButton from '../utils/EditButton';
+import {useParams, useNavigate} from 'react-router-dom'
 
-function Profile() {
-    const { ready, profile, education, experience } = useSelector((state) => state.user)
-    const [editProfile, setEditProfile] = useState(false);
-    const [editExperience, setEditExperience] = useState(false);
-    const [newEducation, setNewEducation] = useState({});
-    const [newExperience, setNewExperience] = useState({});
-    const [editEducation, setEditEducation] = useState(false);
-    const [edit, setEdit] = useState(false);
+function User() {
+    const { ready, profile } = useSelector((state) => state.user )
 
-    console.log(profile)
-    // loading screen while loading data
-    if (!ready) {
+    const { token } = useSelector((state) => state.auth)
+    const { username} = useParams();
+    const [rdy, setRdy] = useState(false)
+    const [userProfile, setUserProfile] = useState({})
+    const [education, setEducation] = useState({})
+    const [experience, setExperience] = useState({})
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (ready && username === profile.username) {
+            navigate('/profile')
+        }
+        const prepareProfile = async () => {
+                const response = await fetch(`${url}/api/user/get/${username}`, {
+            method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + token,
+                },
+            })
+            if (response.status === 200) {
+                let userData = await response.json();
+                //delete userData.userProfile.username
+                setUserProfile(userData.profile);
+                setEducation(userData.education);
+                setExperience(userData.experience);
+                setRdy(true)
+                /*
+                const payload = {
+                userName: userData.username,
+                email: userData.email,
+                userProfile: userData.userProfile,
+                education: userData.education ? userData.education : {},
+                experience: userData.experience? userData.experience : {},
+                }*/
+            } else {
+              console.log(response);
+            }
+        }
+        prepareProfile()
+    
+    }, [ready])
+
+    if (!rdy) {
         return <Loading/>
     }
       return (
     <div className="container mx-auto p-4  space-y-4 lg:px-40 md:px-30 sm:px-25">
-    {editProfile ? (
-        <UserProfile cancel={() => setEditProfile(false)}/>): 
-     editExperience ? (<Experience cancel={() => {setEditExperience(false)
-                                                    setNewExperience({})} }
-                                    edit={edit} initialState={newExperience}/> ):
-     editEducation ? (<Education cancel={() => {setEditEducation(false)
-                                                setNewEducation({})}}
-                                    edit={edit} initialState={newEducation}/>): 
-    (
-    <>
-        <EditButton act={() => setEditProfile(true)} location="text-right"/>
       <div className="flex justify-center">
         <img
-          src={url + profile.profile_pic}
+          src={url + userProfile.profile_pic}
           alt="user pic"
           className="w-48 h-48 rounded-full object-cover"
         />
       </div>
 
       <div className='flex justify-center'>
-          <h2 className="text-3xl flex-1 font-bold text-center">{`${profile.first_name} ${profile.last_name}`}</h2>
+          <h2 className="text-3xl flex-1 font-bold text-center">{`${userProfile.first_name} ${userProfile.last_name}`}</h2>
       </div>
       <div className='border-b p-4 bg-zinc-100 shadow'>
         <div className='shadow py-3 ps-2'>
-        { profile.phone_number? 
+        { userProfile.phone_number? 
         <>
           <h3 className='text-base font-bold  inline'> Phone Number:</h3>
-          <p className='md:ps-3  inline '>{profile.phone_number} </p>
-        </>: 'No phone number added'}
-        </div>
+          <p className='md:ps-3  inline '>{userProfile.phone_number} </p>
+        </>
+        : 'No phone number added'}
+          </div>
        <div className='shadow py-3 ps-2'>
         <h3 className='text-base font-bold  flex-1'> Bio</h3>
-        <p className='md:ps-3 p-4'>{profile?.bio ? profile.bio : 'No bio added yet'} </p>
+        <p className='md:ps-3 p-4'>{userProfile?.bio ? userProfile.bio : 'No bio added yet'} </p>
       </div>
         <div className='shadow py-3 ps-2 text-center'>
-         { profile.resume ? <a href={`${url}${profile.resume}`} 
+         { userProfile.resume ? <a href={`${url}${userProfile.resume}`} 
                         target="_blank"
                         rel="noreferrer">
              <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>Download Cv</button></a>:
@@ -70,9 +92,6 @@ function Profile() {
         <div className="border-b p-4 pb-8 bg-zinc-100 shadow">
         <div className='flex  mb-3'>
           <h3 className="text-base font-bold  flex-1">Experience</h3>
-          <AddButton  act={() => {setEditExperience(true)
-                                    setNewExperience({})
-                                    setEdit(false)}}/>
         </div>
         <ul className="space-y-2">
           {experience?.length > 0  ?
@@ -80,9 +99,6 @@ function Profile() {
           <li key={experienceItem.pk} className='space-x-2 shadow p-4'>
             <div className='flex'>
             <p className='flex-1'>{experienceItem.company_name} - {experienceItem.title}</p>
-            <EditButton act={() => {setEditExperience(true)
-                                    setNewExperience(experienceItem)
-                                    setEdit(true)}}/>
             </div>
                 <p>{moment(experienceItem.start).format('YYYY-MM')} - {experienceItem.end ? moment(experienceItem.end).format('YYYY-MM') : 'Present'}</p>
             <p>Description:</p>
@@ -96,9 +112,6 @@ function Profile() {
         <div className="border-b p-4 pb-8 bg-zinc-100 shadow">
         <div className='flex'>
             <h3 className="text-base font-bold mb-2 flex-1">Education</h3>
-        <AddButton act={() => {setEditEducation(true)
-                               setNewEducation({})
-                               setEdit(false)}}/>
         </div>
         <ul className="space-y-2">
           {education?.length > 0  ?
@@ -106,9 +119,6 @@ function Profile() {
           <li key={educationItem.pk} className='space-x-2 shadow p-4'>
             <div className='flex'>
             <p className='flex-1'>{educationItem.institution} - {educationItem.title}</p>
-            <EditButton act={() => {setEditEducation(true)
-                                    setNewEducation(educationItem)
-                                    setEdit(true)}}/>
             </div>
                 <p>{moment(educationItem.start).format('YYYY-MM')} - {educationItem.end ? moment(educationItem.end).format('YYYY-MM') : 'Present'}</p>
             <p>Description:</p>
@@ -119,11 +129,10 @@ function Profile() {
           }
         </ul>
       </div>
-    </>)} 
     </div>
     
       )
 
 }
 
-export default Profile;
+export default User;

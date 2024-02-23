@@ -6,9 +6,11 @@ from django.contrib.auth.models import User
 from .models import UserProfile, Education, Experience
 
 class UserProfileSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(source='user.username')
     class Meta:
         model = UserProfile
-        fields = ['pk', 'first_name', 'last_name', 'bio', 'profile_pic', 'resume', 'phone_number']
+        fields = ['pk', 'first_name', 'last_name', 'position','bio', 'profile_pic', 'resume', 'phone_number', 'username']
+        read_only_fields = ('username',)
 
 class ExperienceSerializer(serializers.ModelSerializer):
     class Meta:

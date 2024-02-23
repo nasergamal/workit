@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import SearchBar from './SearchBar';
 import { LogoutUser, unsetProfile, setProfile } from '../redux/actionCreator';
 import { url } from '../utils/backend';
 
@@ -26,6 +27,7 @@ const Header = () => {
         })
         if (response.status === 200) {
             let userData = await response.json();
+            //delete userData.profile.username
             const payload = {
                 userName: userData.username,
                 email: userData.email,
@@ -62,15 +64,14 @@ const Header = () => {
       
   return (
     <header className="bg-gray-800 text-white px-4 py-5 items-center">
-      <nav className="space-x-1 flex justify-between">
+      <nav className="space-x-1 flex flex-grow justify-between items-center">
       <Link to='/' className="text-2xl font-bold ">Workit</Link>
-      <input type="text" placeholder="Search..." className="bg-gray-700 text-white px-2 py-1 rounded-lg focus:outline-none" />
-      <div className='space-x-10'>
+      <SearchBar />
+      <div className='space-x-5 md:space-x-10 inline-flex'>
         <Link to='/' className="hover:text-gray-200">Home</Link>
         <Link to='/' className="hover:text-gray-200">About</Link>
-        <Link to='/' className="hover:text-gray-200">Contact</Link>
         {isAuthenticated ? 
-            <div className="relative inline-block text-left">
+            <div className="relative text-left">
       <button
         onClick={handleMenuToggle}
         type="button"
@@ -111,7 +112,7 @@ const Header = () => {
             <div className="flex justify-center">
             <img
                 src={url + '/' +profile.profile_pic}
-                alt="Profile Picture"
+                alt="Profile"
                 className="w-12 h-12 rounded-full object-cover"
             />
             </div>
@@ -129,11 +130,7 @@ const Header = () => {
           </p>
         </div>
       )}
-    </div>
-            /*<div className='drop-menu'>
-            <button onClick={logoutHandler}className='hover:text-gray-200'>Logout</button>
-            <Link to='/profile' className='hover:text-gray-200'>Profile</Link>
-            </>*/ :
+    </div>:
             <Link to='/login' className='hover:text-gray-200'>Login</Link>
         }
       </div>

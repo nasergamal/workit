@@ -6,10 +6,9 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 import Verify from './components/Verify';
 import Profile from './components/Profile';
+import User from './components/User';
+import SearchResults from './components/SearchResults';
 import PrivateRoute from './utils/PrivateRoute';
-import Experience from './components/profileComponents/Experience';
-import Education from './components/profileComponents/Education';
-import UserProfile from './components/profileComponents/UserProfile';
 
 function App() {
 
@@ -23,9 +22,8 @@ function App() {
                 <Route path='/signup' element={<Signup/>}/>
                 <Route path='/verify/:id' element={<Verify/>}/>
                 <Route path='/profile' element={<PrivateRoute><Profile/> </PrivateRoute>}/>
-                <Route path='/experience' element={<PrivateRoute><Experience/> </PrivateRoute>}/>
-                <Route path='/education' element={<PrivateRoute><Education/> </PrivateRoute>}/>
-                <Route path='/userProfile' element={<PrivateRoute><UserProfile/> </PrivateRoute>}/>
+                <Route path='/search/results' element={<PrivateRoute><SearchResults/> </PrivateRoute>}/>
+                <Route path='/user/:username' element={<PrivateRoute><User /></PrivateRoute>} />
             </Routes>
         </Router>
     </div>

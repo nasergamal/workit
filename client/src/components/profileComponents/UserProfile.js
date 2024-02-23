@@ -73,6 +73,7 @@ function UserProfile({cancel}) {
     })
       .then((response) => response.json())
       .then((data) => {
+        //delete data.username
         dispatch(updateProfile(data));
         setNewProfile(emptyState);
       })
