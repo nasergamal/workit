@@ -18,7 +18,6 @@ function Profile() {
     const [editEducation, setEditEducation] = useState(false);
     const [edit, setEdit] = useState(false);
 
-    console.log(profile)
     // loading screen while loading data
     if (!ready) {
         return <Loading/>
@@ -49,10 +48,14 @@ function Profile() {
       </div>
       <div className='border-b p-4 bg-zinc-100 shadow'>
         <div className='shadow py-3 ps-2'>
+          <h3 className='text-base font-bold inline pe-2'>Email:</h3>
+          <p className='inline '>{ profile.email} </p>
+        </div>
+        <div className='shadow py-3 ps-2'>
         { profile.phone_number? 
         <>
-          <h3 className='text-base font-bold  inline'> Phone Number:</h3>
-          <p className='md:ps-3  inline '>{profile.phone_number} </p>
+          <h3 className='text-base font-bold inline pe-2'> Phone Number:</h3>
+          <p className='inline '>{profile.phone_number} </p>
         </>: 'No phone number added'}
         </div>
        <div className='shadow py-3 ps-2'>
@@ -110,7 +113,7 @@ function Profile() {
                                     setNewEducation(educationItem)
                                     setEdit(true)}}/>
             </div>
-                <p>{moment(educationItem.start).format('YYYY-MM')} - {educationItem.end ? moment(educationItem.end).format('YYYY-MM') : 'Present'}</p>
+                <p>{moment(educationItem.start).format('YYYY-MM')} - {moment(educationItem.end).format('YYYY-MM')}</p>
             <p>Description:</p>
              <p className='px-2'> {educationItem?.description}</p>
           </li>

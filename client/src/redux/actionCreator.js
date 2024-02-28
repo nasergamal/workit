@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT, SIGNUP, UPDATE_EDUCATION, UPDATE_EXPERIENCE, SET_PROFILE, UNSET_PROFILE, UPDATE_PROFILE } from "./actions";
+import { LOGIN, LOGOUT, SIGNUP, UPDATE_EDUCATION, UPDATE_EXPERIENCE, SET_PROFILE, UNSET_PROFILE, UPDATE_PROFILE, UPDATE_COMPANY } from "./actions";
 
 export function LoginUser(data) {
     return ({
@@ -52,6 +52,13 @@ export function updateEducation(data) {
 export function updateExperience(data) {
     return ({
         type: UPDATE_EXPERIENCE,
+        payload: data,
+    })
+}
+
+export function updateCompany(data) {
+    return ({
+        type: UPDATE_COMPANY,
         payload: data,
     })
 }

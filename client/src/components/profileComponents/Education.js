@@ -30,7 +30,7 @@ function Education({cancel, edit, initialState}) {
   const handleAddEducation = (event) => {
     event.preventDefault();
     let exp = { ...newEducation };
-    exp.start = moment(newEducation.end).format('YYYY-MM-DD hh:mm');
+    exp.start = moment(newEducation.start).format('YYYY-MM-DD hh:mm');
     exp.end = moment(newEducation.end).format('YYYY-MM-DD hh:mm');
     exp = Object.entries(exp).reduce((a,[k,v]) => (v ? (a[k]=v, a) : a), {})
     fetch(`${url}/api/user/set-education/`, {
@@ -53,7 +53,7 @@ function Education({cancel, edit, initialState}) {
   const handleUpdateEducation = (event) => {
     event.preventDefault();
     let exp = { ...newEducation };
-    exp.start = moment(newEducation.end).format('YYYY-MM-DD hh:mm');
+    exp.start = moment(newEducation.start).format('YYYY-MM-DD hh:mm');
     exp.end = moment(newEducation.end).format('YYYY-MM-DD hh:mm');
     exp = Object.entries(exp).reduce((a,[k,v]) => (v ? (a[k]=v, a) : a), {})
     fetch(`${url}/api/user/set-education/`, {

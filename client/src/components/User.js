@@ -36,14 +36,6 @@ function User() {
                 setEducation(userData.education);
                 setExperience(userData.experience);
                 setRdy(true)
-                /*
-                const payload = {
-                userName: userData.username,
-                email: userData.email,
-                userProfile: userData.userProfile,
-                education: userData.education ? userData.education : {},
-                experience: userData.experience? userData.experience : {},
-                }*/
             } else {
               console.log(response);
             }
@@ -70,10 +62,14 @@ function User() {
       </div>
       <div className='border-b p-4 bg-zinc-100 shadow'>
         <div className='shadow py-3 ps-2'>
+          <h3 className='text-base font-bold inline pe-2'>Email:</h3>
+          <p className='inline '>{userProfile.email} </p>
+        </div>
+        <div className='shadow py-3 ps-2'>
         { userProfile.phone_number? 
         <>
           <h3 className='text-base font-bold  inline'> Phone Number:</h3>
-          <p className='md:ps-3  inline '>{userProfile.phone_number} </p>
+          <p className='inline '>{userProfile.phone_number} </p>
         </>
         : 'No phone number added'}
           </div>

@@ -6,6 +6,8 @@ from rest_framework.decorators import api_view, permission_classes, parser_class
 from rest_framework.parsers import JSONParser, MultiPartParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from company.models import Company, Job
+from company.serializers import CompanySerializer, JobSerializer
 
 from userprofile.serializers import UserProfileSerializer, ExperienceSerializer , EducationSerializer, UserSerializer
 from userprofile.models import UserProfile, Experience, Education
@@ -98,7 +100,7 @@ def set_profile(request):
         userprofile = UserProfile.objects.get(pk=request.data.get('pk'))
         serializer = UserProfileSerializer(userprofile, data=request.data, partial=True)
         if serializer.is_valid(raise_exception=True):
-            serializer.save(user=request.user)
+            serializer.save(user=request.user) # remove user later
             # print(serializer.data)
             return Response(serializer.data)
         else:
@@ -113,6 +115,14 @@ def search_profile(request):
             full_name=Concat('first_name', V(' '), 'last_name')).filter(
                     Q(full_name__icontains= query) | Q(position__icontains = query))
     userdata = UserProfileSerializer(user_list, many=True)
-    # print(userdata.data)
-    return Response(userdata.data)
+    print(query)
+    companies = Company.objects.filter(name__icontains=query)
+    companydata = CompanySerializer(companies, many=True)
+    jobs = Job.objects.filter(position__icontains=query)
+    jobdata = JobSerializer(jobs, many=True)
+    print(companies)
+    print(companydata.data)
+    print(jobs)
+    print(jobdata.data)
+    return Response({'users':userdata.data, 'companies': companydata.data, 'jobs': jobdata.data})
 

@@ -7,7 +7,7 @@ import { url } from '../utils/backend';
 
 const Header = () => {
     const {isAuthenticated, token} = useSelector((state) => state.auth)
-    const {ready, userName, profile} = useSelector((state) => state.user)
+    const {ready, userName, profile, companies} = useSelector((state) => state.user)
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
@@ -32,6 +32,7 @@ const Header = () => {
                 userName: userData.username,
                 email: userData.email,
                 profile: userData.profile,
+                companies: userData.companies,
                 education: userData.education ? userData.education : {},
                 experience: userData.experience? userData.experience : {},
             }
@@ -119,15 +120,38 @@ const Header = () => {
             {userName}<br/>
             View Profile
           </Link>
-          <p
-            onClick={logoutHandler}
-            className="block px-4 py-2 text-sm text-red-500 hover:bg-red-100"
+          {companies && 
+            <ul>
+              {companies.map((company) => {
+              return (
+              <Link
+                to={`/company/${company.name}`}
+                key={company.pk}
+                className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50'
+                      >{company.name}
+            </Link>
+              )
+          })}
+            </ul>
+          }
+          <Link
+            to="/new/company"
+            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
             role="menuitem"
             tabIndex="-1"
             id="menu-item-1"
           >
+          Add company
+          </Link>
+          <button
+            onClick={logoutHandler}
+            className="w-full block px-4 py-2 text-sm text-red-500 hover:bg-red-100"
+            role="menuitem"
+            tabIndex="-1"
+            id="menu-item-3"
+          >
             Logout
-          </p>
+          </button>
         </div>
       )}
     </div>:

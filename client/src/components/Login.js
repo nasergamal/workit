@@ -26,8 +26,11 @@ function Login() {
             dispatch(LoginUser(data.key))
             navigate('/')
         } else {
-            console.log(data)
-            setError('Email or password is invalid')
+            if (data?.non_field_errors[0] === "Unable to log in with provided credentials.") {
+              setError('Email or password is invalid')
+            } else {
+              setError(data?.non_field_errors[0])
+            }
         }
     }
 

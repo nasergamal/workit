@@ -1,4 +1,4 @@
-import { SET_PROFILE, UNSET_PROFILE, UPDATE_EDUCATION, UPDATE_EXPERIENCE, UPDATE_PROFILE } from './actions'
+import { SET_PROFILE, UNSET_PROFILE, UPDATE_COMPANY, UPDATE_EDUCATION, UPDATE_EXPERIENCE, UPDATE_PROFILE } from './actions'
 
 const initialState = {
     ready: false,
@@ -20,6 +20,7 @@ function userReducer(state=initialState, action) {
                 profile: action.payload.profile,
                 education: action.payload.education,
                 experience: action.payload.experience,
+                companies: action.payload.companies,
             }
         case UPDATE_EDUCATION:
             return {
@@ -35,6 +36,11 @@ function userReducer(state=initialState, action) {
             return {
                 ...state,
                 profile: action.payload,
+            }
+        case UPDATE_COMPANY:
+            return {
+                ...state,
+                companies: action.payload,
             }
         case UNSET_PROFILE:
             return{

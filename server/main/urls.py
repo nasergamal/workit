@@ -23,6 +23,7 @@ urlpatterns = [
     path('auth/', include('dj_rest_auth.urls')),
     path('auth/signup/', include('dj_rest_auth.registration.urls')),
     path('api/user/', include('userprofile.urls')),
+    path('api/company/', include('company.urls')),
 ]
 
 

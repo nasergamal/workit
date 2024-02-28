@@ -9,6 +9,9 @@ import Profile from './components/Profile';
 import User from './components/User';
 import SearchResults from './components/SearchResults';
 import PrivateRoute from './utils/PrivateRoute';
+import Company from './components/Company';
+import CompanyForm from './components/CompanyForm';
+import Job from './components/Job';
 
 function App() {
 
@@ -24,6 +27,9 @@ function App() {
                 <Route path='/profile' element={<PrivateRoute><Profile/> </PrivateRoute>}/>
                 <Route path='/search/results' element={<PrivateRoute><SearchResults/> </PrivateRoute>}/>
                 <Route path='/user/:username' element={<PrivateRoute><User /></PrivateRoute>} />
+                <Route path='/new/company' element={<PrivateRoute><CompanyForm edit={false} /></PrivateRoute>} />
+                <Route path='/company/:companyName' element={<PrivateRoute><Company /></PrivateRoute>} />
+                <Route path='/company/:companyName/job/:id' element={<PrivateRoute><Job /></PrivateRoute>} />
             </Routes>
         </Router>
     </div>
