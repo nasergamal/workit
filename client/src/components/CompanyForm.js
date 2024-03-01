@@ -1,4 +1,4 @@
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useState, useRef} from 'react';
 import { url } from '../utils/backend';
 import { useNavigate } from 'react-router-dom';
@@ -17,7 +17,6 @@ function CompanyForm({cancel, edit, initialState}) {
   const picture = useRef(edit ? url+initialState.logo : null)
   const [newCompany, setNewCompany] = useState(initialState || emptyState);
   const [errors, setErrors] = useState({})
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleInputChange = (event) => {
@@ -35,7 +34,6 @@ function CompanyForm({cancel, edit, initialState}) {
       return () => URL.revokeObjectURL(objectUrl)
     }
   }
-
   const handleCompany = async(event) => {
     event.preventDefault();
     let company = { ...newCompany };
@@ -77,32 +75,37 @@ function CompanyForm({cancel, edit, initialState}) {
 
 
   return (
-    <div className="shadow-md rounded-md bg-white p-4 xl:px-80 lg:px-52 md:px-40 sm:px-25 pt-20">
+    <div className="shadow-md rounded-md p-4 xl:px-80 lg:px-52 md:px-40 sm:px-25 pt-20">
       <div className='flex  mb-3'>
         <h2 className="text-lg font-bold mb-4 flex-1 ">Company</h2>
       </div>
-      <form onSubmit={handleCompany} className='bg-zinc-100 shadow p-4'>
-      <div className="mb-4 flex-inline">
-      <label htmlFor="logo" className="block text-sm font-medium mb-2">
-      Company logo
-      </label>
-      {picture.current &&
-      <div className="flex justify-center">
-      <img
-      src={picture.current}
-      alt="user pic"
-      className="w-36 h-36 rounded-full object-cover"
-      />
-      </div>}
+      <form onSubmit={handleCompany} className='bg-white border border-indigo-100 p-4'>
+      <p className='block text-sm font-medium mb-2'>Company logo</p>
+        <div class="flex items-center justify-center w-full">
+            <label for="logo" class="flex flex-col items-center justify-center w-full sm:w-6/12  h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-100  hover:bg-gray-500 ">
+      {picture.current ? (
+          <img
+          src={picture.current}
+          alt="user pic"
+          className="w-40 h-40 rounded-full object-cover"
+          />) : (
+                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                    <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                    </svg>
+                    <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+        </div>)}
       <input
       type="file"
       id="logo"
       name="logo"
       onChange={handleFileChange}
-      className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 inline  sm:text-sm border rounded-md p-2"
+      className="hidden shadow-sm focus:ring-indigo-500 focus:border-indigo-500  sm:text-sm border rounded-md p-2"
       accept="image/png, image/jpeg, image/jpg" 
       />
-      </div>
+        <input id="dropzone-file" type="file" class="hidden" />
+    </label>
+</div>
         <div className="mb-4">
         <label htmlFor="name" className="block text-sm font-medium mb-2">
         Company name

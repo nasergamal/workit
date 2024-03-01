@@ -4,6 +4,10 @@ import { useSelector } from 'react-redux';
 import { Link, useSearchParams } from 'react-router-dom'
 import { url } from '../utils/backend';
 import Loading from '../utils/Loading';
+import PaginateItems from '../utils/PaginateItems';
+import SearchCompanyMap from './paginationComponents/SearchCompanyMap';
+import SearchJobsMap from './paginationComponents/SearchJobsMap';
+import SearchUsersMap from './paginationComponents/SearchUsersMap';
 
 function SearchResults() {
     const [searchParams] = useSearchParams();
@@ -66,7 +70,7 @@ function SearchResults() {
     return (
         <div className="pt-20 space-y-4 xl:px-80 lg:px-52 md:px-40 sm:px-25 px-10" >
         {result === 'none' ? (
-                    <div className='bg-zinc-100 text-center shadow py-4'>
+                    <div className='bg-white border border-indigo-100 text-center shadow py-4'>
                       <h1 className='text-bold text-3xl'>No match found</h1>
                     </div>) : (
             <>
@@ -90,70 +94,29 @@ function SearchResults() {
                 <>
                     <h3 className="font-bold text-lg">People</h3>
                     <ul className="">
-                    {users ? (searchResults.users.map((item) => (
-                        <Link to={`/user/${item.username}`}>
-                        <li key={item.pk} className='space-x-5 mb-4 shadow p-4 bg-zinc-100'>
-                          <div className='inline-flex'>
-                            <div className="flex justify-start pe-2 me-2 border-black border-e">
-                            <img
-                                src={url + '/' +item.profile_pic}
-                                alt="Profile"
-                                className="w-12 h-12 rounded-full object-cover"
-                            />
-                          </div>
-                          <div className='='>
-                             <p className=''>{item.first_name} {item.last_name}</p>
-                             <p className=''> {item?.bio}</p>
-                          </div>
-                          </div>
-                        </li>
-                        </Link> ))) : 'No Results found'}
+                    {users ? (
+                        <PaginateItems itemsPerPage={10} items={searchResults.users}
+                                       ListItems={SearchUsersMap} />
+                    ) : 'No Results found'}
                     </ul>
                 </> ) : result === 'job' ?(
                 <>
                     <h3 className="font-bold text-lg">Jobs</h3>
                     <ul className="">
-                    {jobs ? (searchResults.jobs.filter(job => job.open).map((job) => (
-                        <Link to={`/company/${job.company_name}/job/${job.pk}`}>
-                        <li key={job.pk} className='space-x-5 mb-4 shadow p-4 bg-zinc-100'>
-                            <div className='flex'>
-                            <p className='flex-1 pb-4'>Position: {job.position} </p>
-                            <p>Posted: {moment(job.created).format('YYYY-MM-DD')}</p>
-                            </div>
-                            <div className="flex items-center">
-                                <h5 className="text-base pe-2">Expected salary: </h5>
-                                <p>{job.salary ? `${job.currency ? job.currency : ''} ${job.salary}`: "  Classified"}</p>
-                            </div>
-                            <div className="inline-flex items-center">
-                                <h5 className="text-base pe-2">Estimated experience: </h5>
-                                <p>{job.experience} </p>
-                            </div>
-                        </li>
-                        </Link> ))) : 'No Results found'}
+                    {jobs ? (
+                        <PaginateItems itemsPerPage={10} items={searchResults.jobs.filter(job => job.open)}
+                                       ListItems={SearchJobsMap} />
+                        ) : 'No Results found'}
                     </ul>
                 </>       
                 ): result === 'company' ? (
                 <>
                     <h3 className="font-bold text-lg">Companies</h3>
                     <ul className="">
-                    {users ? (searchResults.companies.map((item) => (
-                        <Link to={`/company/${item.name}`}>
-                        <li key={item.pk} className='space-x-5 mb-4 shadow p-4 bg-zinc-100'>
-                          <div className='inline-flex'>
-                            <div className="flex justify-start pe-2 me-2 border-black border-e">
-                            <img
-                                src={url + '/' +item.logo}
-                                alt="Profile"
-                                className="w-12 h-12 rounded-full object-cover"
-                            />
-                          </div>
-                          <div className='='>
-                             <p className=''>{item.name}</p>
-                             <p className=''> {item.industry}</p>
-                          </div>
-                          </div>
-                        </li>
-                        </Link> ))) : 'No Results found'}
+                    {companies ? (
+                        <PaginateItems itemsPerPage={10} items={searchResults.companies}
+                                       ListItems={SearchCompanyMap} />
+                        ) : 'No Results found'}
                     </ul>
                 </> ) : (
                     <div className='bg-zinc-100 text-center shadow py-4'>

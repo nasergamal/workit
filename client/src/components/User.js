@@ -60,7 +60,7 @@ function User() {
       <div className='flex justify-center'>
           <h2 className="text-3xl flex-1 font-bold text-center">{`${userProfile.first_name} ${userProfile.last_name}`}</h2>
       </div>
-      <div className='border-b p-4 bg-zinc-100 shadow'>
+      <div className='border-b p-4 bg-white shadow border border-indigo-100'>
         <div className='shadow py-3 ps-2'>
           <h3 className='text-base font-bold inline pe-2'>Email:</h3>
           <p className='inline '>{userProfile.email} </p>
@@ -85,7 +85,7 @@ function User() {
              'No CV added for this User'}
         </div>
       </div>
-        <div className="border-b p-4 pb-8 bg-zinc-100 shadow">
+        <div className="border-b p-4 pb-8 bg-white border border-indigo-100 shadow">
         <div className='flex  mb-3'>
           <h3 className="text-base font-bold  flex-1">Experience</h3>
         </div>
@@ -105,7 +105,7 @@ function User() {
       </ul>
       </div>
       {/* Education */}
-        <div className="border-b p-4 pb-8 bg-zinc-100 shadow">
+        <div className="border-b p-4 pb-8 bg-white border border-indigo-100 shadow">
         <div className='flex'>
             <h3 className="text-base font-bold mb-2 flex-1">Education</h3>
         </div>

@@ -97,8 +97,8 @@ function Job() {
         <div className='flex  mb-3'>
           <h3 className="text-base font-bold  flex-1">Job Details</h3>
         </div>
-        <div className='p-4 shadow bg-zinc-100 space-y-4'>
-            <div className=' py-2 bg-zinc-100 items-end '>
+        <div className='p-4 shadow bg-white space-y-4'>
+            <div className=' py-2  items-end '>
                 <div className=' inline-flex items-end'>
                     <h5 className='text-lg pe-2'>Position:</h5>
                     <p> {job.position} </p>
@@ -109,9 +109,15 @@ function Job() {
                 <h5 className="text-lg pe-2">Company: </h5>
                 <Link to={`/company/${job.company_name}`} className='text-indigo-500 hover:text-indigo-600 hover:underline '>{job.company_name} </Link>
             </div>
-            
-            <h5 className="text-lg">Description:</h5>
+            <div className="  "> 
+            <h5 className="text-lg">Job Description:</h5>
             <p>{job.description} </p>
+            </div>
+            {job.requirement.length > 0 && (
+            <>
+              <h5 className="text-lg">Job Requirement:</h5>
+              <p>{job.requirement} </p>
+            </>)}
             <div className="flex items-end">
                 <h5 className="text-lg pe-2">Expected Salary: </h5>
             <p>{job.salary ? `$${job.salary}`: "  Classified"}</p>

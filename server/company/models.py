@@ -15,6 +15,7 @@ class Job(models.Model):
     applied = models.ManyToManyField(UserProfile, blank=True)
     position = models.CharField(max_length=100)
     description = models.TextField(max_length=1000)
+    requirement = models.TextField(max_length=1000, null=True, blank=True)
     salary = models.IntegerField(null=True, blank=True)
     currency = models.TextField(max_length=50 ,null=True, blank=True)
     experience = models.CharField(max_length=100)

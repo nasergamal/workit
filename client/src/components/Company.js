@@ -1,13 +1,14 @@
-import moment from "moment";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { url } from "../utils/backend";
 import Loading from "../utils/Loading";
 import EditButton from "../utils/EditButton";
 import AddButton from "../utils/AddButton";
 import CompanyForm from "./CompanyForm";
 import JobForm from "./JobForm";
+import CompanyJobsListing from "./paginationComponents/CompanyJobsListing";
+import PaginateItems from "../utils/PaginateItems";
 
 
 function Company() {
@@ -15,7 +16,6 @@ function Company() {
     const { token } = useSelector((state) => state.auth)
     const { companyName } = useParams();
     const [company, setCompany] = useState({});
-    const [show, setShow] = useState(false) //separate panel for jobs
     const [ready, setReady] = useState(false)
     const [editCompany, setEditCompany] = useState(false) // if user is owner add edit button
     const [edit, setEdit] = useState(false) // to render either the company profile or editing format
@@ -36,7 +36,7 @@ function Company() {
           if (response.status === 200 ) {
               let companyData = await response.json();
               setCompany(companyData)
-              const {jobs, ...cmp} = company;
+              const {jobs, ...cmp} = companyData;
               setNewCompany(cmp);
               setReady(true)
           }
@@ -49,6 +49,7 @@ function Company() {
             setEditCompany(true)
         }
     }, [company])
+    console.log(newCompany)
 
 
     if (!ready) {
@@ -60,7 +61,7 @@ function Company() {
         {edit ? <CompanyForm cancel={() => setEdit(false)}  edit={true} initialState={newCompany}/> : add ? (
                 <JobForm cancel={() => setAdd(false)} pk={company.pk} />) :  (
     <div className="container mx-auto p-4 pt-20 space-y-4 lg:px-40 md:px-30 sm:px-25">
-      <div className=" justify-center p-4 shadow bg-zinc-100">
+      <div className=" justify-center p-4 shadow bg-white border border-indigo-100">
         <img
           src={url + company.logo}
           alt="company logo"
@@ -74,11 +75,11 @@ function Company() {
           <h2 className="text-3xl font-bold">{company.name}</h2>
           <h4 className="text-lg ">{company.industry} - {company.address} </h4>
       </div>
-      <div className=" shadow bg-zinc-100 p-4">
+      <div className=" shadow bg-white border border-indigo-100 p-4">
         <h3 className="text-2xl font-bold">About</h3>
         {company.about}
       </div>
-        <div className="border-b p-4 pb-8  shadowi bg-zinc-100">
+        <div className="border-b p-4 pb-8  bg-white border border-indigo-100">
         <div className='flex  mb-3'>
           <h3 className="text-base font-bold  flex-1">Jobs</h3>
             {editCompany &&
@@ -89,26 +90,11 @@ function Company() {
 
         </div>
         <ul className="space-y-2">
-          {company.jobs?.length > 0  ?
-            company.jobs.map((job) => (
-          <li key={job.pk} className=' shadow p-4 pb-8 bg-white space-y-2'>
-            <div className='flex'>
-            <p className='flex-1 pb-2'>Position: {job.position} </p>
-            <p>Posted: {moment(job.created).format('YYYY-MM-DD')}</p>
-            </div>
-            <div className="flex items-end">
-                <h5 className="text-base pe-2">Expected salary: </h5>
-                <p>{job.salary ? `${job.currency ? job.currency : ''} ${job.salary}`: "  Classified"}</p>
-            </div>
-            <div className="inline-flex items-end">
-                <h5 className="text-base pe-2">Estimated experience: </h5>
-                <p>{job.experience} </p>
-            </div>
-            <div className="">Application: {job.open? 'open': 'closed'}
-            <Link to={`/company/${job.company_name}/job/${job.pk}`} className='float-right bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>view
-            </Link></div>
-            </li>
-            )): 'No Jobs posted'}
+            {company.jobs?.length > 0  ?(
+            <PaginateItems ListItems={CompanyJobsListing} itemsPerPage={10} items={company.jobs} />) : (
+            <div className='bg-zinc-100 text-center shadow py-4'>
+                <h1 className='text-bold text-3xl'>No job posted yet</h1>
+            </div>)}
         </ul>
       </div>
     </div>

@@ -23,7 +23,7 @@ function Profile() {
         return <Loading/>
     }
       return (
-    <div className="container mx-auto p-4  space-y-4 lg:px-40 md:px-30 sm:px-25">
+    <div className="container mx-auto p-4 mb-4 space-y-4 lg:px-40 md:px-30 sm:px-25">
     {editProfile ? (
         <UserProfile cancel={() => setEditProfile(false)}/>): 
      editExperience ? (<Experience cancel={() => {setEditExperience(false)
@@ -46,7 +46,7 @@ function Profile() {
       <div className='flex justify-center'>
           <h2 className="text-3xl flex-1 font-bold text-center">{`${profile.first_name} ${profile.last_name}`}</h2>
       </div>
-      <div className='border-b p-4 bg-zinc-100 shadow'>
+      <div className='border border-indigo-100 p-4 bg-white shadow'>
         <div className='shadow py-3 ps-2'>
           <h3 className='text-base font-bold inline pe-2'>Email:</h3>
           <p className='inline '>{ profile.email} </p>
@@ -70,7 +70,7 @@ function Profile() {
              'No CV added for this User'}
         </div>
       </div>
-        <div className="border-b p-4 pb-8 bg-zinc-100 shadow">
+        <div className="border border-indigo-100 p-4 pb-8 bg-white shadow">
         <div className='flex  mb-3'>
           <h3 className="text-base font-bold  flex-1">Experience</h3>
           <AddButton  act={() => {setEditExperience(true)
@@ -96,7 +96,7 @@ function Profile() {
       </ul>
       </div>
       {/* Education */}
-        <div className="border-b p-4 pb-8 bg-zinc-100 shadow">
+        <div className="border border-indigo-100 p-4 pb-8 bg-white shadow">
         <div className='flex'>
             <h3 className="text-base font-bold mb-2 flex-1">Education</h3>
         <AddButton act={() => {setEditEducation(true)

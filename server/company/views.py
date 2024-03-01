@@ -7,7 +7,7 @@ from company.models import Company, Job
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from company.serializers import CompanySerializer, JobSerializer
+from company.serializers import CompanySerializer, JobPreviewSerializer, JobSerializer
 from userprofile.serializers import UserProfileSerializer
 
 @api_view(['GET'])
@@ -31,6 +31,12 @@ def get_job(request, id):
         return Response(jobdata.data)
     except:
         return Response(status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['GET'])
+def get_all_jobs(request):
+    jobs = Job.objects.all()
+    serializer = JobPreviewSerializer(jobs, many=True)
+    return Response(serializer.data)
 
 @api_view(['POST', 'PUT'])
 @permission_classes([IsAuthenticated])

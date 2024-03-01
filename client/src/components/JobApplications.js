@@ -16,7 +16,7 @@ function JobApplications({applicants, cancel}) {
             <ul className="">
             {applicants.map((user) => (
             <Link to={`/user/${user.username}`}>
-            <li key={user.pk} className='space-x-5 mb-4 shadow p-4 bg-zinc-100'>
+            <li key={user.pk} className='space-x-5 mb-4 shadow p-4 bg-white border border-indigo-100'>
               <div className='inline-flex'>
                 <div className="flex justify-start pe-2 me-2 border-black border-e">
                 <img
@@ -35,7 +35,7 @@ function JobApplications({applicants, cancel}) {
             </ul>
             </>
         ) : (
-        <div className='bg-zinc-100 text-center shadow py-4'>
+         <div className='text-center shadow py-4 bg-white border border-indigo-100'>
                 <h1 className='text-bold text-3xl'>no applicants </h1>
             </div>)}
         </>

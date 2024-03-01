@@ -121,7 +121,7 @@ function Education({cancel, edit, initialState}) {
             type="text"
             id="study_field"
             name="study_field"
-            value={newEducation?.study_field}
+            value={newEducation.study_field ? newEducation?.study_field : ""}
             onChange={handleInputChange}
             className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border rounded-md p-2"
           />
@@ -149,7 +149,7 @@ function Education({cancel, edit, initialState}) {
             type="text"
             id="degree"
             name="degree"
-            value={newEducation.degree}
+            value={newEducation.degree ? newEducation.degree : ""}
             onChange={handleInputChange}
             className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500  block w-full sm:text-sm border rounded-md p-2"
          />
@@ -162,7 +162,7 @@ function Education({cancel, edit, initialState}) {
             type="text"
             id="description"
             name="description"
-            value={newEducation.description}
+            value={newEducation.description? newEducation.description: ""}
             onChange={handleInputChange}
             rows='5'
             className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500  block w-full sm:text-sm border rounded-md p-2"
@@ -177,7 +177,7 @@ function Education({cancel, edit, initialState}) {
             type="text"
             id="activites"
             name="activites"
-            value={newEducation.activites}
+            value={newEducation.activites? newEducation.activites: ""}
             onChange={handleInputChange}
             rows='5'
             className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500  block w-full sm:text-sm border rounded-md p-2"

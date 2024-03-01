@@ -60,11 +60,11 @@ function JobForm({cancel, pk}) {
 
 
   return (
-    <div className="shadow-md rounded-md bg-white p-4 xl:px-80 lg:px-52 md:px-40 sm:px-25 pt-20">
+    <div className=" p-4 xl:px-80 lg:px-52 md:px-40 sm:px-25 pt-20">
       <div className='flex  mb-3'>
         <h2 className="text-lg font-bold mb-4 flex-1 ">New position</h2>
       </div>
-      <form onSubmit={handleJob} className='bg-zinc-100 shadow p-4'>
+      <form onSubmit={handleJob} className='bg-white border border-indigo-100 shadow p-4'>
         <div className="mb-4">
         <label htmlFor="position" className="block text-sm font-medium mb-2">
         position*

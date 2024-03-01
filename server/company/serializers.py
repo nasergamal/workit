@@ -11,8 +11,8 @@ class JobSerializer(serializers.ModelSerializer):
     company_name = serializers.CharField(source='company.name',read_only=True)
     class Meta:
         model = Job
-        fields = ['pk', 'position', 'description', 'salary', 'currency', 'experience', 'created', 'open', 'company_id', 'company_name']
-        read_only_fields = ('company_pk', 'company_name',)
+        fields = ['pk', 'position', 'description', 'requirement', 'salary', 'currency', 'experience', 'created', 'open', 'company_id', 'company_name']
+        read_only_fields = ('company_name',)
 
 class CompanySerializer(serializers.ModelSerializer):
     user_username = serializers.CharField(read_only=True, source='user.username')
@@ -22,3 +22,11 @@ class CompanySerializer(serializers.ModelSerializer):
         fields = ['pk', 'name', 'industry', 'address', 'about', 'logo', 'jobs', 'user_username']
         read_only_fields = ('user_username', 'jobs')
 
+
+class JobPreviewSerializer(serializers.ModelSerializer):
+    company_logo = serializers.ImageField(source='company.logo')
+    company_name = serializers.CharField(source='company.name',read_only=True)
+    class Meta:
+        model = Job
+        fields = ['pk', 'position', 'description', 'requirement', 'salary', 'currency', 'experience', 'created', 'open', 'company_logo', 'company_name']
+        read_only_fields = ('company_logo', 'company_name',)

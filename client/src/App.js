@@ -16,7 +16,7 @@ import Job from './components/Job';
 function App() {
 
   return (
-    <div> 
+    <div className='bg-gray-100 min-h-screen'> 
         <Router>
         <Header/>
             <Routes>
