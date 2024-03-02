@@ -7,7 +7,7 @@ from .models import UserProfile
 @receiver(post_save, sender=User)
 def profile_creation(sender, instance=None, created=False, **kwargs):
     print(kwargs)
-    if created and not UserProfile.objects.exists(user=instance):
+    if created and not UserProfile.objects.filter(user=instance).exists():
         UserProfile.objects.create(user=instance, first_name=instance.first_name, last_name=instance.last_name,)
 
 

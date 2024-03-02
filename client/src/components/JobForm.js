@@ -1,18 +1,18 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useState, useRef} from 'react';
+import { useState} from 'react';
 import { url } from '../utils/backend';
-import { useNavigate } from 'react-router-dom';
 import { updateCompany } from '../redux/actionCreator';
 
 const emptyState = {
     position: '',
     description: '',
+    requirement: '',
     salary: '',
     currency: '',
     experience: '',
 }
 
-function JobForm({cancel, pk}) {
+function JobForm({cancel, pk, handleNewJobs}) {
   const { token } = useSelector((state) => state.auth)
   const { companies } = useSelector((state) => state.user)
   const [newJob, setNewJob] = useState(emptyState);
@@ -44,8 +44,9 @@ function JobForm({cancel, pk}) {
           const newCompanies = [...companies].map((company) => {
             if (company.pk === data.company_id) {
               let jobList = [...company.jobs]
-              jobList.unshift(data)
+              jobList.unshift(data);
               //company.jobs = jobList
+              handleNewJobs({...company, jobs: jobList});
               return {...company, jobs: jobList}
             }
             return company
@@ -125,7 +126,7 @@ function JobForm({cancel, pk}) {
         </div>
         <div className="mb-4">
           <label htmlFor="description" className="block text-sm font-medium mb-2">
-            Company description*
+            Job Description*
           </label>
           <textarea
             type="text"
@@ -138,6 +139,21 @@ function JobForm({cancel, pk}) {
             required
           />
         </div>
+        <div className="mb-4">
+          <label htmlFor="requirement" className="block text-sm font-medium mb-2">
+            Job Requirement
+          </label>
+          <textarea
+            type="text"
+            id="requirement"
+            name="requirement"
+            value={newJob.requirement}
+            onChange={handleInputChange}
+            rows='5'
+            className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500  block w-full sm:text-sm border rounded-md p-2"
+          />
+        </div>
+
 
       <div className='text-center'>
            <button

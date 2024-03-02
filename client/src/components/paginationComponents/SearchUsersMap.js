@@ -15,9 +15,9 @@ function SearchUsersMap({items}) {
                     className="w-12 h-12 rounded-full object-cover"
                 />
               </div>
-              <div className='='>
-                 <p className=''>{item.first_name} {item.last_name}</p>
-                 <p className=''> {item?.bio}</p>
+              <div >
+                 <p >{item.first_name} {item.last_name}</p>
+                 <p > {item?.bio}</p>
               </div>
               </div>
             </li>

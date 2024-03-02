@@ -1,4 +1,3 @@
-from dj_rest_auth.registration.views import VerifyEmailView
 from allauth.account.adapter import DefaultAccountAdapter
 
 class CustomAccountAdapter(DefaultAccountAdapter):

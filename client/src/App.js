@@ -12,11 +12,12 @@ import PrivateRoute from './utils/PrivateRoute';
 import Company from './components/Company';
 import CompanyForm from './components/CompanyForm';
 import Job from './components/Job';
+import Reset from './components/Reset';
 
 function App() {
 
   return (
-    <div className='bg-gray-100 min-h-screen'> 
+    <div className='bg-gray-100 min-h-screen whitespace-break-spaces'> 
         <Router>
         <Header/>
             <Routes>

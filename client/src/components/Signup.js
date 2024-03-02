@@ -2,35 +2,46 @@ import React, { useState } from 'react';
 import { url } from '../utils/backend';
 import toast, { Toaster } from 'react-hot-toast';
 
+const emptyState = {
+    username: '',
+    email: '',
+    password1: '',
+    password2: '',
+    first_name: '',
+    last_name: '',
+}
 function Signup() {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password1, setPassword1] = useState('');
-  const [password2, setPassword2] = useState('');
-  const [errors, setErrors] = useState(null)//{username: '', email: '', password1: '', password2: ''});
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-
+  const [user, setUser] = useState(emptyState)
+  const [errors, setErrors] = useState(null)
   const handleSubmit = async(e) => {
     e.preventDefault();
-    const res = await fetch(`${url}/auth/registration/`, {
+    const res = await fetch(`${url}/auth/signup/`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({username, email, password1, password2, first_name: firstName, last_name: lastName})
+        body: JSON.stringify(user)
     });
     if (res.status === 204 || res.status === 201) {
-       toast(`Confirmation Email has been sent to ${email}. please verify you account to contiue`)
+       toast(`Confirmation Email has been sent to ${user.email}. please verify you account to contiue`)
+       setUser(emptyState)
+       
     }  else {
         const data = await res.json();
         setErrors(data);
     }
         
   }
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setUser({ ...user, [name]: value });
+  };
+    console.log(user)
+
         
     return (
-    <div className="container mx-auto max-w-md mt-10">
+    <div className="container mx-auto max-w-md mt-10 p-4 bg-white shadow border border-indigo-100">
     <Toaster />
       <h1 className="text-3xl font-bold text-center mb-4">Sign Up</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -44,8 +55,8 @@ function Signup() {
             name="username"
             autoComplete="username"
             required
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={user.username}
+            onChange={handleInputChange}
             className={`shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-md sm:text-sm border border-gray-300 p-2.5
                 ${errors?.password1 ? 'border-red-500': ''}`}
           />
@@ -64,8 +75,8 @@ function Signup() {
             name="email"
             autoComplete="email"
             required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={user.email}
+            onChange={handleInputChange}
             className={`shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-md sm:text-sm border border-gray-300 p-2.5
                 ${errors?.email ? 'border-red-500': ''}`}
           />
@@ -76,17 +87,17 @@ function Signup() {
 
         </div>
         <div>
-          <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="password1" className="block text-sm font-medium text-gray-700">
             Password
           </label>
           <input
             type="password"
-            id="password"
-            name="password"
+            id="password1"
+            name="password1"
             autoComplete="current-password"
             required
-            value={password1}
-            onChange={(e) => setPassword1(e.target.value)}
+            value={user.password1}
+            onChange={handleInputChange}
             className={`shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-md sm:text-sm border border-gray-300 p-2.5
                  ${errors?.password1 ? 'border-red-500': ''}`}
           />
@@ -105,48 +116,48 @@ function Signup() {
             name="password2"
             autoComplete="current-password"
             required
-            value={password2}
-            onChange={(e) => setPassword2(e.target.value)}
+            value={user.password2}
+            onChange={handleInputChange}
             className={`shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-md sm:text-sm border border-gray-300 p-2.5
-            ${password2 && password2 !== password1 ? 'border-red-500': ''}`}
+            ${user.password2 && user.password2 !== user.password1 ? 'border-red-500': ''}`}
           />
-          {password2 && password2 !== password1 && <ul><li className='text-red-500'>Passwords doesn't match</li></ul> }
+          {user.password2 && user.password2 !== user.password1 && <ul><li className='text-red-500'>Passwords doesn't match</li></ul> }
         </div>
 
         <div>
-          <label htmlFor="firstname" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="first_name" className="block text-sm font-medium text-gray-700">
             First Name
           </label>
           <input
             type="text"
-            id="firstname"
-            name="firstname"
-            autoComplete="firstname"
+            id="first_name"
+            name="first_name"
+            autoComplete="first_name"
             required
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
+            value={user.first_name}
+            onChange={handleInputChange}
             className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-md sm:text-sm border border-gray-300 p-2.5'
           />
         </div>
         
         <div>
-          <label htmlFor="lastname" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="last_name" className="block text-sm font-medium text-gray-700">
             Last Name
           </label>
           <input
             type="text"
-            id="lastname"
-            name="lastname"
-            autoComplete="lastname"
+            id="last_name"
+            name="last_name"
+            autoComplete="last_name"
             required
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
+            value={user.last_name}
+            onChange={handleInputChange}
             className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-md sm:text-sm border border-gray-300 p-2.5'
           />
         </div>
         <button
           type="submit"
-          className="w-full flex justify-center items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          className="mx-auto flex justify-center items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
           Sign up
         </button>
       </form>

@@ -15,9 +15,9 @@ function SearchCompanyMap({items}) {
             className="w-12 h-12 rounded-full object-cover"
         />
       </div>
-      <div className='='>
-         <p className=''>{item.name}</p>
-         <p className=''> {item.industry}</p>
+      <div >
+         <p >{item.name}</p>
+         <p > {item.industry}</p>
       </div>
       </div>
     </li>

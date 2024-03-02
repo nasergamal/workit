@@ -12,12 +12,12 @@ function SearchJobsMap({items}) {
             <p>Posted: {moment(job.created).format('YYYY-MM-DD')}</p>
             </div>
             <div className="flex items-center">
-                <h5 className="text-base pe-2">Expected salary: </h5>
-                <p>{job.salary ? `${job.currency ? job.currency : ''} ${job.salary}`: "  Classified"}</p>
+                <h5 className="text-base ">Expected salary: </h5>
+                <p>{job.salary ? `${job.currency ? job.currency : ''}${job.salary}`: "Classified"}</p>
             </div>
             <div className="inline-flex items-center">
-                <h5 className="text-base pe-2">Estimated experience: </h5>
-                <p>{job.experience} </p>
+                <h5 className="text-base ">Estimated experience: </h5>
+                <p>{job.experience}</p>
             </div>
         </li>
         </Link> ))}

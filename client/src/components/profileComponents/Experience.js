@@ -122,18 +122,19 @@ function Experience({cancel, edit, initialState}) {
                             handleRemove={() => handleDeleteExperience()} />}
       <div className='flex  mb-3'>
       <h2 className="text-lg font-bold mb-4 flex-1 ">Experience</h2>
+      { edit && (
       <button
               type="button"
               onClick={() => setRemove(true)}
               className="w-auto items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
             Delete
-        </button>
+        </button>)}
     </div>
       {/* Add experience form */}
       <form onSubmit={edit ? handleUpdateExperience : handleAddExperience}>
         <div className="mb-4">
           <label htmlFor="title" className="block text-sm font-medium mb-2">
-            Job Title
+            Job Title*
           </label>
           <input
             type="text"
@@ -147,7 +148,7 @@ function Experience({cancel, edit, initialState}) {
         </div>
         <div className="mb-4">
           <label htmlFor="company_name" className="block text-sm font-medium mb-2">
-            Company Name
+            Company Name*
           </label>
           <input
             type="text"
@@ -161,7 +162,7 @@ function Experience({cancel, edit, initialState}) {
         </div>
         <div className="mb-4">
           <label htmlFor="description" className="block text-sm font-medium mb-2">
-            Description
+            Description*
           </label>
           <textarea
             type="text"
@@ -176,7 +177,7 @@ function Experience({cancel, edit, initialState}) {
 
         <div className="mb-4">
           <label htmlFor="start" className="block text-sm font-medium mb-2">
-            From
+            From*
           </label>
           <input
             type="date"

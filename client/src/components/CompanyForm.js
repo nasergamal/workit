@@ -11,7 +11,7 @@ const emptyState = {
     logo: null,
 }
 
-function CompanyForm({cancel, edit, initialState}) {
+function CompanyForm({cancel, edit, initialState, handleNewCompany, returnCompany, jobs}) {
   const { userName } = useSelector((state) => state.user);
   const { token } = useSelector((state) => state.auth)
   const picture = useRef(edit ? url+initialState.logo : null)
@@ -65,7 +65,13 @@ function CompanyForm({cancel, edit, initialState}) {
       const data = await response.json()
       if (response.status === 201) {
           setNewCompany(emptyState);
-          navigate(`/company/${data.name}`)
+          if (edit) {
+            returnCompany(newCompany)
+            handleNewCompany({...newCompany, jobs});
+            cancel();
+          } else {
+            navigate(`/company/${data.name}`)
+          }
       } else {
           setErrors(data)
           console.error('Error updating profile:', data);
@@ -81,19 +87,19 @@ function CompanyForm({cancel, edit, initialState}) {
       </div>
       <form onSubmit={handleCompany} className='bg-white border border-indigo-100 p-4'>
       <p className='block text-sm font-medium mb-2'>Company logo</p>
-        <div class="flex items-center justify-center w-full">
-            <label for="logo" class="flex flex-col items-center justify-center w-full sm:w-6/12  h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-100  hover:bg-gray-500 ">
+        <div className="flex items-center justify-center w-full">
+            <label htmlFor="logo" className="flex flex-col items-center justify-center w-full sm:w-6/12  h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-100  hover:bg-gray-500 ">
       {picture.current ? (
           <img
           src={picture.current}
           alt="user pic"
           className="w-40 h-40 rounded-full object-cover"
           />) : (
-                <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                    <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                    <svg className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
                     </svg>
-                    <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+                    <p className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span className="font-semibold">Click to upload</span> or drag and drop</p>
         </div>)}
       <input
       type="file"
@@ -103,7 +109,7 @@ function CompanyForm({cancel, edit, initialState}) {
       className="hidden shadow-sm focus:ring-indigo-500 focus:border-indigo-500  sm:text-sm border rounded-md p-2"
       accept="image/png, image/jpeg, image/jpg" 
       />
-        <input id="dropzone-file" type="file" class="hidden" />
+        <input id="dropzone-file" type="file" className="hidden" />
     </label>
 </div>
         <div className="mb-4">

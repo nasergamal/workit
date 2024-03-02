@@ -105,12 +105,13 @@ function Education({cancel, edit, initialState}) {
                             handleRemove={() => handleDeleteEducation()} />}
       <div className='flex  mb-3'>
         <h2 className="text-lg font-bold mb-4 flex-1 ">Education</h2>
+      {edit && (
         <button
               type="button"
               onClick={() => setRemove(true)}
               className="w-auto items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
             Delete
-        </button>
+        </button>)}
       </div>
       <form onSubmit={edit ? handleUpdateEducation : handleAddEducation}>
         <div className="mb-4">

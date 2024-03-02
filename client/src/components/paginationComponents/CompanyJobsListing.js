@@ -11,11 +11,11 @@ function CompanyJobsListing({items}) {
             <p>Posted: {moment(job.created).format('YYYY-MM-DD')}</p>
             </div>
             <div className="flex items-end">
-                <h5 className="text-base pe-2">Expected salary: </h5>
-                <p>{job.salary ? `${job.currency ? job.currency : ''} ${job.salary}`: "  Classified"}</p>
+                <h5 className="text-base ">Expected salary: </h5>
+                <p>{job.salary ? `${job.currency ? job.currency : ''} ${job.salary}`: "Classified"}</p>
             </div>
             <div className="inline-flex items-end">
-                <h5 className="text-base pe-2">Estimated experience: </h5>
+                <h5 className="text-base ">Estimated experience: </h5>
                 <p>{job.experience} </p>
             </div>
             <div className="">Application: {job.open? 'open': 'closed'}

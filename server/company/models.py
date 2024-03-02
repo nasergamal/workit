@@ -14,7 +14,7 @@ class Job(models.Model):
     company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='jobs')
     applied = models.ManyToManyField(UserProfile, blank=True)
     position = models.CharField(max_length=100)
-    description = models.TextField(max_length=1000)
+    description = models.TextField()
     requirement = models.TextField(max_length=1000, null=True, blank=True)
     salary = models.IntegerField(null=True, blank=True)
     currency = models.TextField(max_length=50 ,null=True, blank=True)

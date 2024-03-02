@@ -49,17 +49,24 @@ function Company() {
             setEditCompany(true)
         }
     }, [company])
-    console.log(newCompany)
 
+    const handleCompany = (data)  => {
+        setCompany(data)
+    }
 
     if (!ready) {
         return <Loading />
     }
 
+    console.log(company)
     return (
     <>
-        {edit ? <CompanyForm cancel={() => setEdit(false)}  edit={true} initialState={newCompany}/> : add ? (
-                <JobForm cancel={() => setAdd(false)} pk={company.pk} />) :  (
+        {edit ? <CompanyForm cancel={() => setEdit(false)}
+            edit={true} initialState={newCompany}
+            handleNewCompany={handleCompany} returnCompany={(company) => setNewCompany(company)}
+            jobs={company.jobs}
+            /> : add ? (
+                <JobForm cancel={() => setAdd(false)} pk={company.pk} handleNewJobs={handleCompany} />) :  (
     <div className="container mx-auto p-4 pt-20 space-y-4 lg:px-40 md:px-30 sm:px-25">
       <div className=" justify-center p-4 shadow bg-white border border-indigo-100">
         <img

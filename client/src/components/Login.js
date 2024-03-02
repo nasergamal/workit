@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from "react-redux";
-import { LoginUser, setProfile } from "../redux/actionCreator";
+import { useDispatch } from "react-redux";
+import { LoginUser } from "../redux/actionCreator";
 import { url } from '../utils/backend'
 
 function Login() {
@@ -35,9 +35,9 @@ function Login() {
     }
 
     return (
-    <div className="container mx-auto max-w-md mt-10">
-      <h1 className="text-3xl font-bold text-center mb-4">Login</h1>
-      <form onSubmit={handleLogin} className="space-y-4">
+    <div className="container mx-auto max-w-md mt-10  bg-white shadow border border-indigo-100">
+      <h1 className="text-3xl font-bold text-center pt-4 mb-4">Login</h1>
+      <form onSubmit={handleLogin} className="space-y-4 p-4">
         <div>
           <label htmlFor="email" className="block text-sm font-medium text-gray-700">
             Email
@@ -78,7 +78,9 @@ function Login() {
           Sign in
         </button>
       </form>
-    <p className="pt-10 text-center"> Not registerd? <Link to='/signup' className="underline text-blue-600 hover:text-blue-800"> Signup </Link></p>
+    <div className="bg-gray-100 w-full mt-5 p-4 border border-t justify-center flext">
+        <p className=" text-center"> Not registerd? <Link to='/signup' className="underline text-blue-600 hover:text-blue-800"> Signup </Link></p>
+     </div>
     </div>
   );
 }

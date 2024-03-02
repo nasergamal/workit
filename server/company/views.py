@@ -26,7 +26,6 @@ def get_company(request, name):
 def get_job(request, id):
     try:
         company = Job.objects.get(pk=id)
-        print(company.__dict__)
         jobdata = JobSerializer(company, many=False)
         return Response(jobdata.data)
     except:
@@ -43,7 +42,6 @@ def get_all_jobs(request):
 @parser_classes([MultiPartParser, JSONParser])
 def set_company(request):
     if request.method == 'POST':
-        print(request.data)
         serializer = CompanySerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(user=request.user) #remove later for tests
@@ -63,7 +61,6 @@ def set_company(request):
 def set_job(request):
     if request.method == 'POST':
         data = JSONParser().parse(request)
-        print(data)
         serializer = JobSerializer(data=data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
@@ -97,7 +94,6 @@ def apply(request, pk):
 def applied(request, pk):
     job = Job.objects.get(pk=pk)
     serializer = UserProfileSerializer(job.applied.all(), many=True)
-    print(serializer.data)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 

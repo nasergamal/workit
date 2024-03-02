@@ -1,9 +1,8 @@
-import {useState} from 'react';
 import { url } from "../utils/backend";
 import { Link } from 'react-router-dom';
 
 function JobApplications({applicants, cancel}) {
-    const [count, setCount] = useState(applicants.length)
+    const count = applicants.length;
     return (
         <>
         <button 
@@ -12,7 +11,7 @@ function JobApplications({applicants, cancel}) {
             >Return</button>
         {count > 0 ? (
             <>
-            <h3 className="font-bold text-lg">{count} application {count > 1 && 's'}</h3>
+            <h3 className="font-bold text-lg">{count} application{count > 1 && 's'}</h3>
             <ul className="">
             {applicants.map((user) => (
             <Link to={`/user/${user.username}`}>

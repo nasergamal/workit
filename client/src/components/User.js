@@ -1,7 +1,6 @@
 import moment from 'moment';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import Profile from './Profile';
 import { url } from '../utils/backend';
 import Loading from '../utils/Loading';
 import {useParams, useNavigate} from 'react-router-dom'
@@ -66,13 +65,16 @@ function User() {
           <p className='inline '>{userProfile.email} </p>
         </div>
         <div className='shadow py-3 ps-2'>
+          <h3 className='text-base font-bold inline pe-2'> Phone Number:</h3>
         { userProfile.phone_number? 
-        <>
-          <h3 className='text-base font-bold  inline'> Phone Number:</h3>
           <p className='inline '>{userProfile.phone_number} </p>
-        </>
         : 'No phone number added'}
-          </div>
+        </div>
+        { profile.position && (
+        <div className='shadow py-3 ps-2'>
+          <h3 className='text-base font-bold inline pe-2'> Position:</h3>
+          <p className='inline '>{userProfile.position} </p>
+        </div>)}
        <div className='shadow py-3 ps-2'>
         <h3 className='text-base font-bold  flex-1'> Bio</h3>
         <p className='md:ps-3 p-4'>{userProfile?.bio ? userProfile.bio : 'No bio added yet'} </p>
@@ -119,6 +121,12 @@ function User() {
                 <p>{moment(educationItem.start).format('YYYY-MM')} - {educationItem.end ? moment(educationItem.end).format('YYYY-MM') : 'Present'}</p>
             <p>Description:</p>
              <p className='px-2'> {educationItem?.description}</p>
+            { educationItem.activites && (
+            <>
+                <p>Activies:</p>
+                 <p className='px-2'> {educationItem?.activites}</p>
+            </>
+            )}
           </li>
             )):
               'No education added'

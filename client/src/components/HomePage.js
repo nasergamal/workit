@@ -12,7 +12,6 @@ const HomePage = () => {
   const [ready, setReady ] = useState(false)
 
   useEffect(() => {
-      console.log(`${url}/api/company/job/get/all/`)
       const fetchJobs = async() => {
         const response = await fetch(`${url}/api/company/job/get/all/`, {
           method: 'GET',
@@ -22,7 +21,6 @@ const HomePage = () => {
         })
         const data = await response.json()
         if (response.status === 200) {
-            console.log(data);
             setJobs(data);
             setReady(true);
         } else {

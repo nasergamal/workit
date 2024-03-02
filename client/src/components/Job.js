@@ -61,9 +61,10 @@ function Job() {
             },
         })
         if (response.status === 200) {
-            const newProfile = {...profile}
-            newProfile.job_set.push(job.pk)
-            dispatch(updateProfile(newProfile))
+
+            const profileJobs = [...profile.job_set]
+            profileJobs.push(job.pk)
+            dispatch(updateProfile({...profile, job_set: profileJobs}))
         }
     }
     const closePosition = async() => {
@@ -90,43 +91,45 @@ function Job() {
     }
 
     return (
-    <div className="container mx-auto p-4  mt-20 space-y-4 lg:px-72 md:px-40 sm:px-25">
+    <div className="container mx-auto p-4  mt-20 space-y-4 lg:px-52 md:px-25 sm:px-8">
     <Toaster />
     {show ? (<JobApplications cancel={() => setShow(false)} applicants={appliedUsers} />):(
         <>
         <div className='flex  mb-3'>
           <h3 className="text-base font-bold  flex-1">Job Details</h3>
         </div>
-        <div className='p-4 shadow bg-white space-y-4'>
+        <div className='p-4 shadow bg-white border border-indigo-100 space-y-4'>
             <div className=' py-2  items-end '>
-                <div className=' inline-flex items-end'>
-                    <h5 className='text-lg pe-2'>Position:</h5>
-                    <p> {job.position} </p>
+                <div className=' inline-flex items-center'>
+                    <h5 className='text-lg'>Position: </h5>
+                    <p>{job.position}</p>
                 </div>
                 <p className="float-end ">Posted: {moment(job.created).format('YYYY-MM-DD')}</p>
             </div>
-            <div className="flex items-end">
-                <h5 className="text-lg pe-2">Company: </h5>
+            <div className="flex items-center">
+                <h5 className="text-lg">Company: </h5>
                 <Link to={`/company/${job.company_name}`} className='text-indigo-500 hover:text-indigo-600 hover:underline '>{job.company_name} </Link>
             </div>
+            <div className="flex items-center">
+            <h5 className="text-lg">Expected Salary: </h5>
+            <p>{job.salary ? `$${job.salary}`: "Classified"}</p>
+            </div>
+            <div className="flex items-center">
+            <h5 className="text-lg">Estimated experience: </h5>
+            <p>{job.experience} </p>
+            </div>
+        </div>
+        <div className='p-4 shadow bg-white border border-indigo-100 space-y-4'>
             <div className="  "> 
             <h5 className="text-lg">Job Description:</h5>
             <p>{job.description} </p>
             </div>
-            {job.requirement.length > 0 && (
+            {job.requirement && (
             <>
               <h5 className="text-lg">Job Requirement:</h5>
               <p>{job.requirement} </p>
             </>)}
-            <div className="flex items-end">
-                <h5 className="text-lg pe-2">Expected Salary: </h5>
-            <p>{job.salary ? `$${job.salary}`: "  Classified"}</p>
-            </div>
-            <div className="flex items-end">
-                <h5 className="text-lg pe-2">Estimated experience: </h5>
-                <p>{job.experience} </p>
-            </div>
-        <div className='shadow py-3 flex justify-around'>
+        <div className='py-3 flex justify-around'>
         { owned.includes(job.company_id) ? (
             <>
                     { job.open ? (
