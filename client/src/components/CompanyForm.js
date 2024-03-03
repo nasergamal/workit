@@ -1,7 +1,8 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useState, useRef} from 'react';
 import { url } from '../utils/backend';
 import { useNavigate } from 'react-router-dom';
+import { updateCompany } from '../redux/actionCreator';
 
 const emptyState = {
     name: '',
@@ -12,11 +13,12 @@ const emptyState = {
 }
 
 function CompanyForm({cancel, edit, initialState, handleNewCompany, returnCompany, jobs}) {
-  const { userName } = useSelector((state) => state.user);
+  const { userName, companies } = useSelector((state) => state.user);
   const { token } = useSelector((state) => state.auth)
   const picture = useRef(edit ? url+initialState.logo : null)
   const [newCompany, setNewCompany] = useState(initialState || emptyState);
   const [errors, setErrors] = useState({})
+  const dispatch = useDispatch()
   const navigate = useNavigate();
 
   const handleInputChange = (event) => {
@@ -70,6 +72,7 @@ function CompanyForm({cancel, edit, initialState, handleNewCompany, returnCompan
             handleNewCompany({...newCompany, jobs});
             cancel();
           } else {
+            dispatch(updateCompany([...companies, data]))
             navigate(`/company/${data.name}`)
           }
       } else {
@@ -97,9 +100,9 @@ function CompanyForm({cancel, edit, initialState, handleNewCompany, returnCompan
           />) : (
                 <div className="flex flex-col items-center justify-center pt-5 pb-6">
                     <svg className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
                     </svg>
-                    <p className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span className="font-semibold">Click to upload</span> or drag and drop</p>
+                    <p className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span className="font-semibold">Click to upload</span></p>
         </div>)}
       <input
       type="file"
@@ -179,11 +182,11 @@ function CompanyForm({cancel, edit, initialState, handleNewCompany, returnCompan
            <button
               type="submit"
               className=" inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            Update
+            {edit ? 'Update': 'Add'}
             </button>
            <button
               type="button"
-              onClick={cancel}
+              onClick={edit? cancel: ()=> navigate('/')}
               className=" inline-flex  items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
             Cancel
             </button>

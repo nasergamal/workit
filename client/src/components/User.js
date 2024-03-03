@@ -65,18 +65,18 @@ function User() {
           <p className='inline '>{userProfile.email} </p>
         </div>
         <div className='shadow py-3 ps-2'>
-          <h3 className='text-base font-bold inline pe-2'> Phone Number:</h3>
+          <h3 className='text-base font-bold inline pe-2'>Phone Number:</h3>
         { userProfile.phone_number? 
           <p className='inline '>{userProfile.phone_number} </p>
         : 'No phone number added'}
         </div>
         { profile.position && (
         <div className='shadow py-3 ps-2'>
-          <h3 className='text-base font-bold inline pe-2'> Position:</h3>
+          <h3 className='text-base font-bold inline pe-2'>Position:</h3>
           <p className='inline '>{userProfile.position} </p>
         </div>)}
        <div className='shadow py-3 ps-2'>
-        <h3 className='text-base font-bold  flex-1'> Bio</h3>
+        <h3 className='text-base font-bold  flex-1'>Bio</h3>
         <p className='md:ps-3 p-4'>{userProfile?.bio ? userProfile.bio : 'No bio added yet'} </p>
       </div>
         <div className='shadow py-3 ps-2 text-center'>

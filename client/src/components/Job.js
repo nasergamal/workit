@@ -91,7 +91,7 @@ function Job() {
     }
 
     return (
-    <div className="container mx-auto p-4  mt-20 space-y-4 lg:px-52 md:px-25 sm:px-8">
+    <div className="container mx-auto p-4 mb-1  pt-20 space-y-4 lg:px-52 md:px-25 sm:px-8" style={{minHeight: '80vh'}}>
     <Toaster />
     {show ? (<JobApplications cancel={() => setShow(false)} applicants={appliedUsers} />):(
         <>
@@ -163,6 +163,7 @@ function Job() {
             </button>) : (
             <button
                 className='bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded'
+                disabled
                 >Position Closed
             </button> ) }
             </>

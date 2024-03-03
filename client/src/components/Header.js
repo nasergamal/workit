@@ -105,7 +105,7 @@ const Header = () => {
         >
           <Link
             to="/profile"
-            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
             role="menuitem"
             tabIndex="-1"
             id="menu-item-0"
@@ -127,7 +127,7 @@ const Header = () => {
               <Link
                 to={`/company/${company.name}`}
                 key={company.pk}
-                className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50'
+                className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
                       >{company.name}
             </Link>
               )
@@ -136,7 +136,7 @@ const Header = () => {
           }
           <Link
             to="/new/company"
-            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
             role="menuitem"
             tabIndex="-1"
             id="menu-item-1"

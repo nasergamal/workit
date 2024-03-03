@@ -42,7 +42,7 @@ function Company() {
           }
         }
         fetchCompany()
-    }, []) 
+    }, [companyName]) 
 
     useEffect(() => {
         if (userName === company.user_username) {

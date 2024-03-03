@@ -12,7 +12,7 @@ import PrivateRoute from './utils/PrivateRoute';
 import Company from './components/Company';
 import CompanyForm from './components/CompanyForm';
 import Job from './components/Job';
-import Reset from './components/Reset';
+import Footer from './components/Footer';
 
 function App() {
 
@@ -33,6 +33,7 @@ function App() {
                 <Route path='/company/:companyName/job/:id' element={<PrivateRoute><Job /></PrivateRoute>} />
             </Routes>
         </Router>
+      <Footer/>
     </div>
   );
 }

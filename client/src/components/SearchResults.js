@@ -67,7 +67,7 @@ function SearchResults() {
         )
     }
     return (
-        <div className="pt-20 space-y-4 xl:px-80 lg:px-52 md:px-40 sm:px-25 px-10" >
+        <div className="pt-20 space-y-4 xl:px-80 lg:px-52 md:px-40 sm:px-25 px-10" style={{minHeight: '77vh'}}>
         {result === 'none' ? (
                     <div className='bg-white border border-indigo-100 text-center shadow py-4'>
                       <h1 className='text-bold text-3xl'>No match found</h1>
