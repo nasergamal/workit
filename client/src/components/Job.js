@@ -7,6 +7,7 @@ import Loading from "../utils/Loading";
 import { updateProfile } from "../redux/actionCreator";
 import toast, { Toaster } from 'react-hot-toast';
 import JobApplications from "./JobApplications";
+import DeleteConfirm from "../utils/DeleteConfirm";
 
 
 function Job() {
@@ -16,6 +17,7 @@ function Job() {
     const { token } = useSelector((state) => state.auth)
     const [rdy, setRdy] = useState(false);
     const [appliedUsers, setAppliedUsers] = useState([]);
+    const [close, setClose] = useState(false);
     const [show ,setShow] = useState(false);
     const dispatch = useDispatch();
     let owned;
@@ -93,6 +95,13 @@ function Job() {
     return (
     <div className="container mx-auto p-4 mb-1  pt-20 space-y-4 lg:px-52 md:px-25 sm:px-8" style={{minHeight: '80vh'}}>
     <Toaster />
+    {close && <DeleteConfirm 
+            setDelete={() => setClose(false)}
+            handleRemove={() => {closePosition()
+                                setClose(false)}}
+            msg="Are you sure you want to Close this position? Closed Positions can't be opened again."
+            close={true}
+          />}
     {show ? (<JobApplications cancel={() => setShow(false)} applicants={appliedUsers} />):(
         <>
         <div className='flex  mb-3'>
@@ -135,7 +144,7 @@ function Job() {
                     { job.open ? (
                     <button 
                         className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
-                        onClick={closePosition}
+                        onClick={() => setClose(true)}
                         >Close Position
                     </button>) : (
                     <button

@@ -66,7 +66,7 @@ function Education({cancel, edit, initialState}) {
     })
       .then((response) => response.json())
       .then((data) => {
-        const updatedEducation = education.map((edu) => (edu.pk === data.pk ? data : exp));
+        const updatedEducation = education.map((edu) => (edu.pk === data.pk ? data : edu));
         dispatch(updateEducation(updatedEducation));
         setNewEducation(emptyState);
       })
@@ -102,7 +102,9 @@ function Education({cancel, edit, initialState}) {
     <div className="shadow-md rounded-md bg-white p-4">
       {edit && remove && <DeleteConfirm 
                             setDelete={() => setRemove(false)}
-                            handleRemove={() => handleDeleteEducation()} />}
+                            handleRemove={() => handleDeleteEducation()}
+                            msg="Are you sure you want to delete this section from you Education? deleted data can't be recovered."
+          />}
       <div className='flex  mb-3'>
         <h2 className="text-lg font-bold mb-4 flex-1 ">Education</h2>
       {edit && (

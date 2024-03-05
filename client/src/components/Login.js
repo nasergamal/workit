@@ -35,7 +35,8 @@ function Login() {
     }
 
     return (
-    <div className="container mx-auto max-w-md mt-10  bg-white shadow border border-indigo-100">
+    <div style={{minHeight: '75vh'}}>
+    <div className="container mx-auto max-w-md mt-10  bg-white shadow border border-indigo-100 mb-3" >
       <h1 className="text-3xl font-bold text-center pt-4 mb-4">Login</h1>
       <form onSubmit={handleLogin} className="space-y-4 p-4">
         <div>
@@ -79,9 +80,10 @@ function Login() {
         </button>
       </form>
     <div className="bg-gray-100 w-full mt-5 p-4 border border-t justify-center flext">
-        <p className=" text-center"> Not registerd? <Link to='/signup' className="underline text-blue-600 hover:text-blue-800"> Signup </Link></p>
+        <p className=" text-center"> Not registerd? <Link to='/signup' className="underline text-blue-600 hover:text-blue-800">Signup</Link></p>
      </div>
     </div>
+        </div>
   );
 }
 

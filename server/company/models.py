@@ -3,12 +3,18 @@ from django.contrib.auth.models import User
 from userprofile.models import UserProfile
 
 class Company(models.Model):
+    class Meta:
+        verbose_name_plural = 'Companies'
+
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='companies')
     name = models.CharField(max_length=100, unique=True)
     industry = models.CharField(max_length=100)
     address = models.CharField(max_length=255)
     about = models.TextField(max_length=1000)
     logo = models.ImageField(upload_to="img/companies")
+
+    def __str__(self):
+        return self.name
 
 class Job(models.Model):
     company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='jobs')

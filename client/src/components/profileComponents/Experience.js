@@ -119,7 +119,9 @@ function Experience({cancel, edit, initialState}) {
     <div className="shadow-md rounded-md bg-white p-4">
       {edit && remove && <DeleteConfirm 
                             setDelete={() => setRemove(false)}
-                            handleRemove={() => handleDeleteExperience()} />}
+                            handleRemove={() => handleDeleteExperience()} 
+                            msg="Are you sure you want to delete this section from you Experience? deleted data can't be recovered."
+          />}
       <div className='flex  mb-3'>
       <h2 className="text-lg font-bold mb-4 flex-1 ">Experience</h2>
       { edit && (

@@ -70,7 +70,6 @@ const Header = () => {
       <SearchBar />
       <div className='space-x-5 md:space-x-10 inline-flex'>
         <Link to='/' className="hover:text-gray-200">Home</Link>
-        <Link to='/' className="hover:text-gray-200">About</Link>
         {isAuthenticated ? 
             <div className="relative text-left">
       <button

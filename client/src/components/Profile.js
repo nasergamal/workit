@@ -113,12 +113,13 @@ function Profile() {
             education.map((educationItem) => (
           <li key={educationItem.pk} className='space-x-2 shadow p-4'>
             <div className='flex'>
-            <p className='flex-1'>{educationItem.institution} - {educationItem.title}</p>
+            <p className='flex-1'>{educationItem.institution} {educationItem.degree? `- ${educationItem.degree}`: ''}</p>
             <EditButton act={() => {setEditEducation(true)
                                     setNewEducation(educationItem)
                                     setEdit(true)}}/>
             </div>
-                <p>{moment(educationItem.start).format('YYYY-MM')} - {moment(educationItem.end).format('YYYY-MM')}</p>
+            <p>{moment(educationItem.start).format('YYYY-MM')} - {moment(educationItem.end).format('YYYY-MM')}</p>
+            {educationItem.study_field && <p>Field: {educationItem.study_field}</p> }
             <p>Description:</p>
              <p className='px-2'> {educationItem?.description}</p>
             { educationItem.activites && (

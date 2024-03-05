@@ -1,4 +1,4 @@
-function DeleteConfirm({setDelete, handleRemove}) {
+function DeleteConfirm({setDelete, handleRemove, msg, close}) {
     return (
         <div className="fixed inset-0 flex items-center justify-center z-50 backdrop-blur confirm-dialog ">
             <div className="relative px-4 min-h-screen md:flex md:items-center md:justify-center">
@@ -12,13 +12,13 @@ function DeleteConfirm({setDelete, handleRemove}) {
                         </div>
                         <div className="mt-4 md:mt-0 md:ml-6 text-center md:text-left">
                         <p className="font-bold">Warning!</p>
-                        <p className="text-sm text-gray-700 mt-1">You will lose your data by deleting this. This action cannot be undone.
+                        <p className="text-sm text-gray-700 mt-1">{msg}
                         </p>
                         </div>
                     </div>
                     <div className="text-center md:text-right mt-4 md:flex md:justify-end">
                         <button id="confirm-delete-btn" onClick={handleRemove} className="block w-full md:inline-block md:w-auto px-4 py-3 md:py-2 bg-red-200 text-red-700 rounded-lg font-semibold text-sm md:ml-2 md:order-2">
-                            Delete
+                        {close? 'Close' : 'Delete'}
                         </button>
                         <button id="confirm-cancel-btn" onClick={setDelete} className="block w-full md:inline-block md:w-auto px-4 py-3 md:py-2 bg-gray-200 rounded-lg font-semibold text-sm mt-4 md:mt-0 md:order-1">
                         Cancel

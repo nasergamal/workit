@@ -34,7 +34,7 @@ function Verify() {
     }
     if (loading) {
         return (
-        <div className="pt-10 text-center text-black font-bold">
+        <div className="pt-10 text-center text-black font-bold" style={{minHeight: '80.5vh'}}>
             <p>Verifing your email</p>
         </div>
         );
@@ -42,20 +42,21 @@ function Verify() {
 
     if (isVerified) {
         return (
-      <div className="pt-10 text-center text-emerald-500 font-bold h-screen bg-white shadow border border-indigo-100">
+      <div className="pt-10 text-center text-emerald-500 font-bold bg-white shadow border border-indigo-100" style={{minHeight: '80.5vh'}}>
         <p>Email verified successfully!</p>
         <Link to='/login' className="underline text-blue-600 hover:text-blue-800">Login</Link>
       </div>
     );
   }
      return (
-        <div className="pt-10 text-center text-red-500 font-bold h-screen bg-white shadow border border-indigo-100">
+        <div className="pt-10 text-center text-red-500 font-bold bg-white shadow border border-indigo-100" style={{minHeight: '80.5vh'}}>
          <p>Email verification links invalid</p>
          <p className="text-black font-normal">Request a new Link?</p>
         <button
           type="button"
           onClick={() => setResend(true)}
-          className="mx-auto flex mt-4 justify-center items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          className="mx-auto flex mt-4 justify-center items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+         >
           Request
         </button>
         </div>

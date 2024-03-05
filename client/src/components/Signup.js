@@ -37,11 +37,10 @@ function Signup() {
     const { name, value } = event.target;
     setUser({ ...user, [name]: value });
   };
-    console.log(user)
 
         
     return (
-    <div className="container mx-auto max-w-md mt-10 p-4 bg-white shadow border border-indigo-100">
+    <div className="container mx-auto max-w-md mt-10 mb-4 p-4 bg-white shadow border border-indigo-100">
     <Toaster />
       <h1 className="text-3xl font-bold text-center mb-4">Sign Up</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -58,7 +57,7 @@ function Signup() {
             value={user.username}
             onChange={handleInputChange}
             className={`shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-md sm:text-sm border border-gray-300 p-2.5
-                ${errors?.password1 ? 'border-red-500': ''}`}
+                ${errors?.username ? 'border-red-500': ''}`}
           />
           {errors?.username && <ul className='text-red-500'> {errors.username.map((err, idx) => 
             <li key={idx}>{err}</li> )}

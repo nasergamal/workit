@@ -116,9 +116,10 @@ function User() {
             education.map((educationItem) => (
           <li key={educationItem.pk} className='space-x-2 shadow p-4'>
             <div className='flex'>
-            <p className='flex-1'>{educationItem.institution} - {educationItem.title}</p>
+            <p className='flex-1'>{educationItem.institution} {educationItem.degree? `- ${educationItem.degree}`: ''}</p>
             </div>
                 <p>{moment(educationItem.start).format('YYYY-MM')} - {educationItem.end ? moment(educationItem.end).format('YYYY-MM') : 'Present'}</p>
+            {educationItem.study_field && <p>Field: {educationItem.study_field}</p> }
             <p>Description:</p>
              <p className='px-2'> {educationItem?.description}</p>
             { educationItem.activites && (

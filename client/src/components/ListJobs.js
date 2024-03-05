@@ -11,12 +11,12 @@ function ListJobs({items}) {
             {items ? (items.map((job) => (
                 <li key={job.pk} className='space-x-5 mb-4 border border-indigo-100 shadow p-4 bg-white'>
                   <div className='flex'>
-                    <div className="flex basis-2/12 lg:basis-1/12 lg:pe-2  pe-1 me-2 border-black border-e">
-                        <Link to={`/company/${job.company_name}`} className='w-fit'>
+                    <div className="flex basis-2/12 lg:basis-2/12 lg:pe-2  pe-1 me-2 justify-center items-center border-black border-e">
+                        <Link to={`/company/${job.company_name}`} className='w-fit '>
                             <img
                                 src={url + job.company_logo}
                                 alt="logo"
-                                className="w-12 h-12 rounded-full object-cover"
+                                className="w-12 h-12 rounded-full object-cover mx-auto"
                             />
                             <p className='text-pretty'>{job.company_name}</p>
                         </Link>

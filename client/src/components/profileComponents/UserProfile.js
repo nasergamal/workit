@@ -57,7 +57,7 @@ function UserProfile({cancel}) {
     //userProfile = Object.entries(userProfile).reduce((a,[k,v]) => (v ? (a[k]=v, a) : a), {})
     const formData = new FormData();
     for (const key in userProfile) {
-      if (!userProfile[key] && key !== 'bio') {
+      if (!userProfile[key] && !['bio', 'position'].includes(key)) {
           continue
       } else if (key !== 'profile_pic') { 
         formData.append(key, userProfile[key]);
