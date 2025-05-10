@@ -9,6 +9,12 @@ Workit is a web application designed to connect job seekers with potential emplo
 - React
 - Tailwind
 
+## Preview
+
+
+https://github.com/user-attachments/assets/d9ea4f1c-cf75-4305-be32-19bd872319f3
+
+
 ## Installation:
 1. **Clone the Repository:**
     ``` Bash
